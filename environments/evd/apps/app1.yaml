@@ -7,8 +7,8 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: taviamcboa/nginx
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/git-branch: argocd-image-updater
+    # argocd-image-updater.argoproj.io/write-back-method: git
+    # argocd-image-updater.argoproj.io/git-branch: argocd-image-updater
 
   # Add this finalizer ONLY if you want these to cascade delete.
   finalizers:
