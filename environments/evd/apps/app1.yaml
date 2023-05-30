@@ -5,6 +5,11 @@ metadata:
   name: app1
   # You'll usually want to add your resources to the argocd namespace.
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: taviamcboa/nginx
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: argocd-image-updater
+
   # Add this finalizer ONLY if you want these to cascade delete.
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -14,7 +19,7 @@ spec:
   # Source of the application manifests
   source:
     repoURL: https://github.com/xcheng85/git-helm-chart-repo.git # public git-helm chart
-    targetRevision: HEAD
+    targetRevision: main
     path: app1-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
     helm:
       passCredentials: false # If true then adds --pass-credentials to Helm commands to pass credentials to all domains
@@ -22,8 +27,10 @@ spec:
       releaseName: my-app1
       version: v3
       parameters:
+      - name: "image.repository"
+        value: taviamcboa/nginx
       - name: "image.tag"
-        value: 1.25.0
+        value: v0.1.0
 
   # Destination cluster and namespace to deploy the application
   destination:
